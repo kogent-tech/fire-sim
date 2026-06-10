@@ -1,0 +1,14 @@
+services:
+  backend:
+    image: ghcr.io/kogent-tech/fire-sim-backend:latest
+    restart: unless-stopped
+    expose:
+      - "8000"
+
+  frontend:
+    image: ghcr.io/kogent-tech/fire-sim-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend

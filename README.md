@@ -64,12 +64,21 @@ npm run build  # static build to frontend/dist/
 
 ### Docker (self-hosting)
 
+**Quick start (pre-built images):**
+
+```bash
+curl -O https://raw.githubusercontent.com/kogent-tech/fire-sim/main/docker-compose.prod.yml
+docker compose -f docker-compose.prod.yml up -d
+```
+
+**Build from source** (for development or customization):
+
 ```bash
 docker compose up -d --build
 ```
 
-Open `http://localhost:8080`. The frontend container serves the built
-static site and reverse-proxies `/api` to the backend container — no
+Either way, open `http://localhost:8080`. The frontend container serves the
+built static site and reverse-proxies `/api` to the backend container — no
 extra configuration needed.
 
 Tested on Debian 12 (bookworm) with Docker 29 + Compose v5 — recommended
