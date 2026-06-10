@@ -72,6 +72,9 @@ Open `http://localhost:8080`. The frontend container serves the built
 static site and reverse-proxies `/api` to the backend container — no
 extra configuration needed.
 
+Tested on Debian 12 (bookworm) with Docker 29 + Compose v5 — recommended
+base OS for self-hosting.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
