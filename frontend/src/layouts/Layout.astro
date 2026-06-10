@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "fire-sim — FIRE / SWR Monte Carlo Simulator",
+  description = "Open-source historical, Monte Carlo, and CAPE-based retirement withdrawal simulator.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <h1>fire-sim</h1>
+        <p>Historical, Monte Carlo &amp; CAPE-based Safe Withdrawal Rate simulator</p>
+      </div>
+    </header>
+    <main class="site-main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>
+        Open source on
+        <a href="https://github.com/kogent-tech/fire-sim" target="_blank" rel="noreferrer">GitHub</a>
+        · MIT licensed · Not investment advice.
+      </p>
+    </footer>
+  </body>
+</html>

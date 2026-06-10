@@ -39,12 +39,28 @@ Frontend (React/Astro)  ->  FastAPI backend (/simulate)  ->  Compute engine (num
 | Compute | Python + numpy/pandas/scipy |
 | API | FastAPI |
 | Historical data | Shiller dataset (Yale, public) |
-| Frontend | React/Astro + Recharts or visx |
+| Frontend | React/Astro + Recharts |
 | Containerization | Docker / docker-compose |
 
 ## Development
 
-Setup instructions will be added as the core engine takes shape.
+### Backend / simulation engine + API
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+pytest                                 # run engine + API tests
+uvicorn fire_sim.api.main:app --reload # http://127.0.0.1:8000, docs at /docs
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev    # http://127.0.0.1:4321, proxies to PUBLIC_API_BASE_URL (defaults to http://127.0.0.1:8000 in dev)
+npm run build  # static build to frontend/dist/
+```
 
 ## License
 
