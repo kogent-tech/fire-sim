@@ -1,10 +1,12 @@
 import { Area, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { PercentileBands } from "../../lib/types";
 import { formatCompactNumber, formatMonthsAsYears } from "../../lib/format";
+import InfoLink from "../InfoLink";
 
 interface Props {
   bands: PercentileBands;
   title?: string;
+  onOpenInfo?: (topic: string) => void;
 }
 
 const BAND_FILL = "#60a5fa";
@@ -14,7 +16,7 @@ const BAND_FILL = "#60a5fa";
  * percentiles becomes a stacked, semi-transparent area, with the median
  * (p50, if present) drawn as a solid line on top.
  */
-export default function FanChart({ bands, title }: Props) {
+export default function FanChart({ bands, title, onOpenInfo }: Props) {
   const percentileKeys = Object.keys(bands.series)
     .map(Number)
     .sort((a, b) => a - b);
@@ -55,7 +57,12 @@ export default function FanChart({ bands, title }: Props) {
 
   return (
     <div className="chart-container">
-      {title && <h3 className="chart-title">{title}</h3>}
+      {title && (
+        <h3 className="chart-title">
+          {title}
+          {onOpenInfo && <InfoLink topic="percentile-bands" label="percentile bands" onOpen={onOpenInfo} />}
+        </h3>
+      )}
       <ResponsiveContainer width="100%" height={360}>
         <ComposedChart data={stackedData} margin={{ top: 8, right: 16, left: 8, bottom: 8 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />

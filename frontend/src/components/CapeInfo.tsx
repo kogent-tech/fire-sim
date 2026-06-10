@@ -1,11 +1,20 @@
 import type { CapeResponse } from "../lib/types";
 import { formatPercent } from "../lib/format";
+import InfoLink from "./InfoLink";
 
-export default function CapeInfo({ cape }: { cape: CapeResponse }) {
+interface Props {
+  cape: CapeResponse;
+  onOpenInfo: (topic: string) => void;
+}
+
+export default function CapeInfo({ cape, onOpenInfo }: Props) {
   return (
     <div className="cape-info">
       <div className="stat-card">
-        <span className="stat-label">Current CAPE ratio</span>
+        <span className="stat-label">
+          Current CAPE ratio
+          <InfoLink topic="cape-ratio" label="the CAPE ratio" onOpen={onOpenInfo} />
+        </span>
         <span className="stat-value stat-value-large">{cape.current_cape.toFixed(1)}</span>
       </div>
       <div className="stat-card">

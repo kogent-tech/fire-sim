@@ -4,11 +4,16 @@ import FanChart from "./charts/FanChart";
 import MethodComparisonChart from "./charts/MethodComparisonChart";
 import SummaryStats from "./SummaryStats";
 
-export default function ResultsView({ result }: { result: SimulateResponse }) {
+interface Props {
+  result: SimulateResponse;
+  onOpenInfo: (topic: string) => void;
+}
+
+export default function ResultsView({ result, onOpenInfo }: Props) {
   if (isCompareResponse(result)) {
     return (
       <div className="results-view">
-        <CapeInfo cape={result.cape} />
+        <CapeInfo cape={result.cape} onOpenInfo={onOpenInfo} />
         <MethodComparisonChart compare={result} />
       </div>
     );
@@ -17,17 +22,17 @@ export default function ResultsView({ result }: { result: SimulateResponse }) {
   if (isCapeMethodResponse(result)) {
     return (
       <div className="results-view">
-        <CapeInfo cape={result.cape} />
-        <SummaryStats result={result.simulation} />
-        <FanChart bands={result.simulation.balance_percentiles} title="Portfolio balance over time" />
+        <CapeInfo cape={result.cape} onOpenInfo={onOpenInfo} />
+        <SummaryStats result={result.simulation} onOpenInfo={onOpenInfo} />
+        <FanChart bands={result.simulation.balance_percentiles} title="Portfolio balance over time" onOpenInfo={onOpenInfo} />
       </div>
     );
   }
 
   return (
     <div className="results-view">
-      <SummaryStats result={result} />
-      <FanChart bands={result.balance_percentiles} title="Portfolio balance over time" />
+      <SummaryStats result={result} onOpenInfo={onOpenInfo} />
+      <FanChart bands={result.balance_percentiles} title="Portfolio balance over time" onOpenInfo={onOpenInfo} />
     </div>
   );
 }

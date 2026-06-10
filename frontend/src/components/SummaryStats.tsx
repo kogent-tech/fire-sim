@@ -1,8 +1,10 @@
 import type { SimulationResponse } from "../lib/types";
 import { formatCompactNumber, formatPercent } from "../lib/format";
+import InfoLink from "./InfoLink";
 
 interface Props {
   result: SimulationResponse;
+  onOpenInfo: (topic: string) => void;
 }
 
 const STRATEGY_LABELS: Record<string, string> = {
@@ -11,13 +13,16 @@ const STRATEGY_LABELS: Record<string, string> = {
   constant_percentage: "Constant % of portfolio",
 };
 
-export default function SummaryStats({ result }: Props) {
+export default function SummaryStats({ result, onOpenInfo }: Props) {
   const ending = result.ending_balance_percentiles;
 
   return (
     <div className="summary-stats">
       <div className="stat-card">
-        <span className="stat-label">Success rate</span>
+        <span className="stat-label">
+          Success rate
+          <InfoLink topic="success-rate" label="success rate" onOpen={onOpenInfo} />
+        </span>
         <span className="stat-value stat-value-large">{formatPercent(result.success_rate, 1)}</span>
         <span className="stat-sub">
           {result.n_paths.toLocaleString()} {result.method === "historical" ? "historical windows" : "simulated paths"}

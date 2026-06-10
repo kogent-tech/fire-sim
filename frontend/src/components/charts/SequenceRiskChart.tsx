@@ -13,9 +13,11 @@ import {
 } from "recharts";
 import type { SequenceRiskResponse } from "../../lib/types";
 import { formatCompactNumber, formatMonthsAsYears, formatPercent } from "../../lib/format";
+import InfoLink from "../InfoLink";
 
 interface Props {
   result: SequenceRiskResponse;
+  onOpenInfo: (topic: string) => void;
 }
 
 const MAX_SAMPLED_PATHS = 40;
@@ -26,7 +28,7 @@ function colorForRank(t: number): string {
   return `hsl(${hue}, 70%, 45%)`;
 }
 
-export default function SequenceRiskChart({ result }: Props) {
+export default function SequenceRiskChart({ result, onOpenInfo }: Props) {
   const { paths, months, sensitivity } = result;
 
   const scatterSuccess = paths
@@ -58,7 +60,10 @@ export default function SequenceRiskChart({ result }: Props) {
 
   return (
     <div className="chart-container">
-      <h3 className="chart-title">Sequence-of-returns risk</h3>
+      <h3 className="chart-title">
+        Sequence-of-returns risk
+        <InfoLink topic="sequence-risk" label="sequence-of-returns risk" onOpen={onOpenInfo} />
+      </h3>
 
       <div className="sequence-charts">
         <div>

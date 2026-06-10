@@ -10,6 +10,7 @@ import type {
 } from "../lib/types";
 import ScenarioForm from "./ScenarioForm";
 import ResultsView from "./ResultsView";
+import InfoDrawer from "./InfoDrawer";
 import SuccessRateCurveChart from "./charts/SuccessRateCurveChart";
 import SequenceRiskChart from "./charts/SequenceRiskChart";
 
@@ -33,6 +34,7 @@ export default function App() {
   const [submitCount, setSubmitCount] = useState(0);
   const [ready, setReady] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [infoTopic, setInfoTopic] = useState<string | null>(null);
 
   const [simResult, setSimResult] = useState<SimulateResponse | null>(null);
   const [simError, setSimError] = useState<string | null>(null);
@@ -173,7 +175,13 @@ export default function App() {
 
   return (
     <div className="app">
-      <ScenarioForm scenario={scenario} onChange={setScenario} onSubmit={handleSubmit} loading={simLoading} />
+      <ScenarioForm
+        scenario={scenario}
+        onChange={setScenario}
+        onSubmit={handleSubmit}
+        loading={simLoading}
+        onOpenInfo={setInfoTopic}
+      />
 
       <div className="tabs" role="tablist">
         {TABS.map((tab) => (
@@ -194,7 +202,7 @@ export default function App() {
           <>
             {simLoading && <p className="status status-loading">Running simulation...</p>}
             {simError && <p className="status status-error">{simError}</p>}
-            {!simLoading && !simError && simResult && <ResultsView result={simResult} />}
+            {!simLoading && !simError && simResult && <ResultsView result={simResult} onOpenInfo={setInfoTopic} />}
           </>
         )}
 
@@ -212,10 +220,14 @@ export default function App() {
           <>
             {seqLoading && <p className="status status-loading">Computing sequence-risk data...</p>}
             {seqError && <p className="status status-error">{seqError}</p>}
-            {!seqLoading && !seqError && seqResult && <SequenceRiskChart result={seqResult} />}
+            {!seqLoading && !seqError && seqResult && (
+              <SequenceRiskChart result={seqResult} onOpenInfo={setInfoTopic} />
+            )}
           </>
         )}
       </div>
+
+      <InfoDrawer topic={infoTopic} onClose={() => setInfoTopic(null)} />
     </div>
   );
 }

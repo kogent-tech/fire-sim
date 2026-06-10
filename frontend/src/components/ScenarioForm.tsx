@@ -1,11 +1,13 @@
 import type { ChangeEvent, FormEvent } from "react";
 import type { Method, MonteCarloMode, ScenarioRequest, WithdrawalStrategy } from "../lib/types";
+import InfoLink from "./InfoLink";
 
 interface Props {
   scenario: ScenarioRequest;
   onChange: (scenario: ScenarioRequest) => void;
   onSubmit: () => void;
   loading: boolean;
+  onOpenInfo: (topic: string) => void;
 }
 
 const METHOD_LABELS: Record<Method, string> = {
@@ -13,6 +15,13 @@ const METHOD_LABELS: Record<Method, string> = {
   montecarlo: "Monte Carlo",
   cape: "CAPE-adjusted",
   compare: "Compare all methods",
+};
+
+const METHOD_INFO_TOPICS: Record<Method, string> = {
+  historical: "method-historical",
+  montecarlo: "method-montecarlo",
+  cape: "method-cape",
+  compare: "method-compare",
 };
 
 const STRATEGY_LABELS: Record<WithdrawalStrategy, string> = {
@@ -26,7 +35,7 @@ const MC_MODE_LABELS: Record<MonteCarloMode, string> = {
   block_bootstrap: "Block bootstrap",
 };
 
-export default function ScenarioForm({ scenario, onChange, onSubmit, loading }: Props) {
+export default function ScenarioForm({ scenario, onChange, onSubmit, loading, onOpenInfo }: Props) {
   const set = <K extends keyof ScenarioRequest>(key: K, value: ScenarioRequest[K]) => {
     onChange({ ...scenario, [key]: value });
   };
@@ -60,7 +69,10 @@ export default function ScenarioForm({ scenario, onChange, onSubmit, loading }: 
       <fieldset disabled={loading}>
         <div className="field-grid">
           <label className="field">
-            <span>Method</span>
+            <span>
+              Method
+              <InfoLink topic={METHOD_INFO_TOPICS[scenario.method]} label="simulation method" onOpen={onOpenInfo} />
+            </span>
             <select value={scenario.method} onChange={(e) => set("method", e.target.value as Method)}>
               {Object.entries(METHOD_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>
@@ -119,7 +131,10 @@ export default function ScenarioForm({ scenario, onChange, onSubmit, loading }: 
 
           {showWithdrawalStrategy && (
             <label className="field">
-              <span>Withdrawal strategy</span>
+              <span>
+                Withdrawal strategy
+                <InfoLink topic="withdrawal-strategy" label="withdrawal strategies" onOpen={onOpenInfo} />
+              </span>
               <select
                 value={scenario.withdrawal_strategy}
                 onChange={(e) => set("withdrawal_strategy", e.target.value as WithdrawalStrategy)}
@@ -181,7 +196,10 @@ export default function ScenarioForm({ scenario, onChange, onSubmit, loading }: 
             <h3>Monte Carlo</h3>
             <div className="field-grid">
               <label className="field">
-                <span>Return model</span>
+                <span>
+                  Return model
+                  <InfoLink topic="mc-mode" label="Monte Carlo return models" onOpen={onOpenInfo} />
+                </span>
                 <select value={scenario.mc_mode} onChange={(e) => set("mc_mode", e.target.value as MonteCarloMode)}>
                   {Object.entries(MC_MODE_LABELS).map(([value, label]) => (
                     <option key={value} value={value}>
@@ -233,7 +251,10 @@ export default function ScenarioForm({ scenario, onChange, onSubmit, loading }: 
 
         {showCapeOptions && (
           <div className="field-group">
-            <h3>CAPE</h3>
+            <h3>
+              CAPE
+              <InfoLink topic="cape-ratio" label="the CAPE ratio" onOpen={onOpenInfo} />
+            </h3>
             <div className="field-grid">
               <label className="field">
                 <span>Current CAPE ratio (blank = latest data)</span>
