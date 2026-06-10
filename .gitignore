@@ -15,5 +15,9 @@ dist/
 .env
 .env.local
 
+# Raw downloaded data (re-fetchable; processed/versioned data is committed)
+data/raw/*
+!data/raw/.gitkeep
+
 # OS
 .DS_Store
