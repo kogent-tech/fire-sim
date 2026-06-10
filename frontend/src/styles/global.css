@@ -6,8 +6,17 @@
   --color-text-muted: #64748b;
   --color-accent: #1d4ed8;
   --color-accent-hover: #1e40af;
+  --font-heading: inherit;
   --radius: 10px;
   color-scheme: light;
+}
+
+/* Kogent.Tech-hosted instance (mc.kogent.tech) — applied via PUBLIC_BRAND=kogent
+   at build time. Self-hosted/default builds keep the plain palette above. */
+[data-brand="kogent"] {
+  --color-accent: #1d9e75;
+  --color-accent-hover: #16805f;
+  --font-heading: "DM Serif Display", Georgia, serif;
 }
 
 * {
@@ -44,17 +53,46 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .site-header h1 {
   margin: 0;
   font-size: 1.5rem;
+  font-family: var(--font-heading);
 }
 
 .site-header p {
   margin: 0.25rem 0 0;
   color: var(--color-text-muted);
   font-size: 0.95rem;
+}
+
+.kogent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.kogent-badge:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.kogent-badge img {
+  width: 16px;
+  height: 16px;
 }
 
 .site-main {

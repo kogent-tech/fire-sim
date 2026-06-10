@@ -10,10 +10,14 @@ const {
   title = "fire-sim — FIRE / SWR Monte Carlo Simulator",
   description = "Open-source historical, Monte Carlo, and CAPE-based retirement withdrawal simulator.",
 } = Astro.props;
+
+// Set PUBLIC_BRAND=kogent at build time for the Kogent.Tech-hosted instance
+// (mc.kogent.tech). Self-hosted/default builds get the plain fire-sim look.
+const brand = import.meta.env.PUBLIC_BRAND ?? "default";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-brand={brand}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -21,12 +25,34 @@ const {
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    {
+      brand === "kogent" && (
+        <>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+            href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap"
+            rel="stylesheet"
+          />
+        </>
+      )
+    }
   </head>
   <body>
     <header class="site-header">
       <div class="site-header-inner">
-        <h1>fire-sim</h1>
-        <p>Historical, Monte Carlo &amp; CAPE-based Safe Withdrawal Rate simulator</p>
+        <div>
+          <h1>fire-sim</h1>
+          <p>Historical, Monte Carlo &amp; CAPE-based Safe Withdrawal Rate simulator</p>
+        </div>
+        {
+          brand === "kogent" && (
+            <a class="kogent-badge" href="https://kogent.tech" target="_blank" rel="noreferrer">
+              <img src="/kogent-mark.svg" alt="" />
+              An open project by Kogent.Tech
+            </a>
+          )
+        }
       </div>
     </header>
     <main class="site-main">
