@@ -12,31 +12,18 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from fire_sim.engine.result import SimulationResult
 from fire_sim.engine.returns import load_monthly_returns, portfolio_returns
+from fire_sim.engine.simulate import simulate_balances
 
 
 @dataclass
-class HistoricalResult:
+class HistoricalResult(SimulationResult):
     start_dates: pd.DatetimeIndex
-    balances: np.ndarray  # shape (n_windows, horizon_months + 1), real dollars
-    depleted: np.ndarray  # shape (n_windows,) bool
-    success_rate: float
-    stock_alloc: float
-    withdrawal_rate: float
-    horizon_years: int
-    starting_balance: float
 
     @property
     def n_windows(self) -> int:
-        return self.balances.shape[0]
-
-    @property
-    def ending_balances(self) -> np.ndarray:
-        return self.balances[:, -1]
-
-    def percentile(self, q) -> np.ndarray:
-        """Percentile (0-100, scalar or sequence) of balance at each month, across windows."""
-        return np.percentile(self.balances, q, axis=0)
+        return self.n_paths
 
 
 def run_historical_simulation(
@@ -71,22 +58,15 @@ def run_historical_simulation(
             f"({n_returns} months of returns available, need {horizon_months})"
         )
 
+    windows = np.lib.stride_tricks.sliding_window_view(returns, horizon_months)
     monthly_withdrawal = starting_balance * withdrawal_rate / 12.0
-
-    balances = np.empty((n_windows, horizon_months + 1))
-    balances[:, 0] = starting_balance
-    current = np.full(n_windows, starting_balance)
-    for m in range(1, horizon_months + 1):
-        r = returns[m - 1 : m - 1 + n_windows]
-        current = np.maximum(current * (1.0 + r) - monthly_withdrawal, 0.0)
-        balances[:, m] = current
+    balances = simulate_balances(windows, starting_balance, monthly_withdrawal)
 
     depleted = balances[:, -1] <= 0.0
     success_rate = float(1.0 - depleted.mean())
     start_dates = pd.DatetimeIndex(monthly_returns["date"].iloc[:n_windows])
 
     return HistoricalResult(
-        start_dates=start_dates,
         balances=balances,
         depleted=depleted,
         success_rate=success_rate,
@@ -94,6 +74,7 @@ def run_historical_simulation(
         withdrawal_rate=withdrawal_rate,
         horizon_years=horizon_years,
         starting_balance=starting_balance,
+        start_dates=start_dates,
     )
 
 
