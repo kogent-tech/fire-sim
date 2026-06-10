@@ -62,6 +62,16 @@ npm run dev    # http://127.0.0.1:4321, proxies to PUBLIC_API_BASE_URL (defaults
 npm run build  # static build to frontend/dist/
 ```
 
+### Docker (self-hosting)
+
+```bash
+docker compose up -d --build
+```
+
+Open `http://localhost:8080`. The frontend container serves the built
+static site and reverse-proxies `/api` to the backend container — no
+extra configuration needed.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
