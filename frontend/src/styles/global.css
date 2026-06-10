@@ -114,6 +114,40 @@ body {
   color: var(--color-accent);
 }
 
+/* Presets */
+
+.preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.preset-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-right: 0.25rem;
+}
+
+.preset-button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.preset-button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 /* Form */
 
 .scenario-form {

@@ -9,6 +9,7 @@ import type {
   SuccessRateCurveResponse,
 } from "../lib/types";
 import ScenarioForm from "./ScenarioForm";
+import PresetBar from "./PresetBar";
 import ResultsView from "./ResultsView";
 import InfoDrawer from "./InfoDrawer";
 import SuccessRateCurveChart from "./charts/SuccessRateCurveChart";
@@ -173,8 +174,15 @@ export default function App() {
     setSubmitCount((c) => c + 1);
   };
 
+  const loadPreset = (preset: ScenarioRequest) => {
+    setScenario(preset);
+    setSubmitted(preset);
+    setSubmitCount((c) => c + 1);
+  };
+
   return (
     <div className="app">
+      <PresetBar onSelect={loadPreset} />
       <ScenarioForm
         scenario={scenario}
         onChange={setScenario}
