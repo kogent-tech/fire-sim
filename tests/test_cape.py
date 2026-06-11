@@ -1,4 +1,3 @@
-import numpy as np
 import pytest
 
 from fire_sim.engine.cape import fit_cape_swr_model, per_window_swr

@@ -6,7 +6,6 @@ Run with:
 
 See docs/MC_VS_HISTORICAL.md for a written discussion of the results.
 """
-import numpy as np
 
 from fire_sim.engine.historical import run_historical_simulation
 from fire_sim.engine.monte_carlo import run_monte_carlo_simulation
