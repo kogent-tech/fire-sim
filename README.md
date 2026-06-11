@@ -10,6 +10,12 @@ and a web frontend.
 simulation methods are implemented behind a stateless API and web frontend.
 Try the [live demo](https://mc.kogent.tech).
 
+## Screenshots
+
+![Scenario form and results overview](docs/screenshots/mc_overview.png)
+
+![Methodology explainer sidebar](docs/screenshots/blog_infosidebar.png)
+
 ## Why
 
 cFIREsim and FIRECalc are closed-source and not self-hostable or API-driven.
