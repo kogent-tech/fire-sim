@@ -6,7 +6,9 @@ cFIREsim style rolling windows) with Monte Carlo simulation and CAPE-based
 dynamic withdrawal strategies (ERN methodology), exposed via a stateless API
 and a web frontend.
 
-**Status:** pre-alpha — core simulation engine in development.
+**Status:** early but functional — historical, Monte Carlo, and CAPE-based
+simulation methods are implemented behind a stateless API and web frontend.
+Try the [live demo](https://mc.kogent.tech).
 
 ## Why
 
