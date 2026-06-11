@@ -1,5 +1,7 @@
 # fire-sim
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/kogenttech)
+
 A self-hosted, open-source Safe Withdrawal Rate (SWR) / retirement Monte
 Carlo simulation engine. Combines historical simulation (Trinity Study /
 cFIREsim style rolling windows) with Monte Carlo simulation and CAPE-based
